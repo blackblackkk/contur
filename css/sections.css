@@ -1154,6 +1154,103 @@ html:not(.js) .works__hud {
   }
 }
 
+/* --- «сочный» фокус: заметный пункт становится чёрной полосой с наклонным краем --- */
+.why__mark {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  padding: 0 0.16em 0 0.12em;
+  margin-left: 0.2em;
+  white-space: nowrap;
+}
+.why__mark::before {
+  content: '';
+  position: absolute;
+  inset: 0.02em -0.04em 0.02em 0;
+  z-index: -1;
+  background: var(--black);
+  border-radius: 0.14em 0.05em 0.14em 0.05em;
+  transform: skewX(var(--skew));
+  transform-origin: 0 50%;
+}
+.why__mark span {
+  color: var(--white);
+}
+.motion .why__mark::before {
+  transform: skewX(var(--skew)) scaleX(0);
+  transition: transform 0.9s var(--ease-io) 0.35s;
+}
+.motion .why__mark span {
+  color: var(--black);
+  transition: color 0.3s 0.75s;
+}
+.motion .why__loud.is-in .why__mark::before {
+  transform: skewX(var(--skew)) scaleX(1);
+}
+.motion .why__loud.is-in .why__mark span {
+  color: var(--white);
+}
+
+.principle {
+  margin-inline: calc(-1 * var(--pad));
+  padding-inline: var(--pad);
+  overflow: hidden;
+}
+.principle__title {
+  font-size: clamp(1.6rem, 4.3vw, 4.6rem);
+}
+.principle__mark {
+  left: var(--pad);
+  height: clamp(1.6rem, 4.3vw, 4.6rem);
+}
+.principle > * {
+  position: relative;
+  z-index: 1;
+}
+.principle > .principle__mark {
+  position: absolute;
+}
+.js .principle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -30%;
+  right: -30%;
+  z-index: 0;
+  background: var(--black);
+  transform: translateX(-104%) skewX(var(--skew));
+  transition: transform 0.75s var(--ease-io);
+  will-change: transform;
+}
+.js .principle.is-focus::before {
+  transform: translateX(0) skewX(var(--skew));
+}
+.js .principle.is-focus .principle__title {
+  color: var(--white);
+  -webkit-text-stroke-color: var(--white);
+  transition-delay: 0.18s;
+}
+.js .principle.is-focus .principle__text {
+  color: rgba(255, 255, 255, 0.82);
+  transition-delay: 0.22s;
+}
+.js .principle.is-focus .principle__mark path {
+  stroke: var(--white);
+  transition-delay: 0.3s;
+}
+.js .principle__text {
+  transition: opacity 0.5s, transform 0.7s var(--ease-out), color 0.4s;
+}
+@media (min-width: 900px) {
+  .principle {
+    padding-block: clamp(26px, 3.6vw, 56px);
+  }
+  .principle__mark {
+    margin-top: calc(clamp(1.6rem, 4.3vw, 4.6rem) * -0.5);
+  }
+}
+
 /* ==========================================================================
    06 · Контакты
    ========================================================================== */
