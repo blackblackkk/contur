@@ -66,11 +66,12 @@ function tick(now) {
   scroll.time = now;
   scroll.y = window.scrollY;
   // на таче инерция уже нативная — сглаживаем слабее, чтобы не было «резины»
-  const k = 1 - Math.pow(1 - (fine ? 0.13 : 0.3), dt / 16.7);
+  const k = 1 - Math.pow(1 - (fine ? 0.085 : 0.2), dt / 16.7);
   const prev = scroll.s;
   scroll.s += (scroll.y - scroll.s) * k;
   if (Math.abs(scroll.y - scroll.s) < 0.05) scroll.s = scroll.y;
   scroll.v += (scroll.s - prev - scroll.v) * 0.2;
+
 
   for (const sc of scenes) {
     const p = clamp((scroll.s - sc.start) / (sc.end - sc.start));

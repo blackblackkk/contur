@@ -307,13 +307,13 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(14px);
-  transition: opacity 0.35s, transform 0.5s var(--ease-out), visibility 0s 0.4s;
+  transition: opacity 0.4s var(--ease-soft), transform 0.6s var(--ease-soft), visibility 0s 0.45s;
 }
 .motion .service.is-active {
   opacity: 1;
   visibility: visible;
   transform: none;
-  transition: opacity 0.6s 0.12s, transform 0.8s var(--ease-out) 0.12s, visibility 0s;
+  transition: opacity 0.7s var(--ease-soft) 0.18s, transform 0.9s var(--ease-out) 0.18s, visibility 0s;
 }
 .motion .service__n {
   display: none;
@@ -427,7 +427,7 @@
   .motion .service__body {
     display: grid;
     grid-template-rows: auto 0fr;
-    transition: grid-template-rows 0.6s var(--ease-out);
+    transition: grid-template-rows 0.8s var(--ease-io);
   }
   .motion .service.is-active .service__body {
     grid-template-rows: auto 1fr;

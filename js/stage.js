@@ -56,15 +56,21 @@ export function initStage() {
     );
   }
 
-  function serviceAt(shape, f, box) {
-    // f — дробный номер услуги: целая часть — знак, дробная — переход к следующему
-    // в начале шага знак перетекает из предыдущего, дальше стоит неподвижно
-    const i = clamp(Math.floor(f), 0, SERVICE_COUNT - 1);
-    const local = span(f - i, 0, 0.44);
-    serviceShape(b, i, box);
-    if (local >= 1 || i === 0) return copy(shape, b);
-    serviceShape(a, i - 1, box);
-    return blend(shape, a, b, local, 0.35);
+  // Знаки услуг сменяются по времени, а не «привязаны» к колесу:
+  // переход всегда доигрывается до конца и не дёргается при остановке прокрутки.
+  const snap = makeShape();
+  const morph = { to: 0, m: 1 };
+  const MORPH_MS = 900;
+  function serviceAt(shape, index, box, dt) {
+    if (index !== morph.to) {
+      copy(snap, out);
+      morph.to = index;
+      morph.m = 0;
+    }
+    serviceShape(b, index, box);
+    if (morph.m >= 1) return copy(shape, b);
+    morph.m = Math.min(1, morph.m + dt / MORPH_MS);
+    return blend(shape, snap, b, morph.m, 0.3);
   }
 
   function copy(dst, src) {
@@ -83,7 +89,7 @@ export function initStage() {
     figure.render(hero, { draw: 1 });
   }
 
-  function frameTick(sc) {
+  function frameTick(sc, dt) {
     if (!MOTION) return staticFrame();
 
     pointer.x += (pointer.tx - pointer.x) * 0.07;
@@ -95,7 +101,7 @@ export function initStage() {
 
     // 1. первый экран и переход к услугам
     if (s < m.servicesStart) {
-      const t = span(s, m.servicesStart - sc.vh * 0.9, m.servicesStart);
+      const t = span(s, m.servicesStart - sc.vh, m.servicesStart);
       const cap = capBox(heroWord);
       heroShape(hero, cap, sc.vw);
       if (t <= 0) {
@@ -107,6 +113,8 @@ export function initStage() {
       serviceBracketShape(a, box);
       blend(out, hero, a, t, 0);
       figure.render(out, { draw: state.draw, tx: tx * t, ty: ty * t });
+      morph.to = 0;
+      morph.m = 1;
       const rest = span(t, 0.72, 1);
       if (rest > 0) {
         serviceShape(b, 0, box);
@@ -118,14 +126,16 @@ export function initStage() {
 
     // 2. услуги
     if (s <= m.servicesEnd) {
-      const f = clamp(state.services, 0, 0.9999) * SERVICE_COUNT;
-      serviceAt(out, f, stageEl.getBoundingClientRect());
+      const index = Math.floor(clamp(state.services, 0, 0.9999) * SERVICE_COUNT);
+      serviceAt(out, index, stageEl.getBoundingClientRect(), dt);
       return figure.render(out, { tx, ty });
     }
 
     // 3. рамка летит к первому проекту
     if (s < m.handoffEnd + sc.vh * 0.2) {
       const t = span(s, m.servicesEnd, m.handoffEnd);
+      morph.to = SERVICE_COUNT - 1;
+      morph.m = 1;
       serviceShape(a, SERVICE_COUNT - 1, stageEl.getBoundingClientRect());
       frameShape(frame, firstMedia.getBoundingClientRect());
       blend(out, a, frame, ease.inOutSine(t), 0.25);
