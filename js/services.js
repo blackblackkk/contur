@@ -17,6 +17,30 @@ export function initServices({ stage }) {
   const stageEl = $('#services-stage');
   const total = items.length;
 
+  // навигация по услугам: стрелки, полоски-шаги, свайп и нажатие
+  const mkArrow = (cls, label) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `services__arrow ${cls}`;
+    b.setAttribute('aria-label', label);
+    return b;
+  };
+  const prevBtn = mkArrow('services__arrow--prev', 'Предыдущая услуга');
+  const nextBtn = mkArrow('services__arrow--next', 'Следующая услуга');
+  ticksHost.removeAttribute('aria-hidden');
+  ticksHost.appendChild(prevBtn);
+  const ticks = items.map((_, i) => {
+    const t = document.createElement('button');
+    t.type = 'button';
+    t.className = 'services__tick';
+    t.setAttribute('aria-label', `Услуга ${i + 1} из ${total}`);
+    t.appendChild(document.createElement('i'));
+    t.addEventListener('click', () => goTo(i));
+    ticksHost.appendChild(t);
+    return t.firstChild;
+  });
+  ticksHost.appendChild(nextBtn);
+
   let active = -1;
   function setActive(i) {
     if (i === active) return;
@@ -39,47 +63,29 @@ export function initServices({ stage }) {
 
   let start = 0;
   let end = 1;
-  let manual = !isDesktop();
-  let inView = false;
-  let lastTouch = 0;
-
-  function show(i) {
-    setActive(i);
-    if (stage) stage.state.services = (i + 0.5) / total;
-  }
   addScene({
     measure: () => {
       start = docTop(section);
       end = start + section.offsetHeight - pin.offsetHeight;
-      manual = !isDesktop();
       return { start, end };
     },
     update: (p) => {
-      inView = p > 0 && p < 1;
-      // на узком экране услуги листаются жестом и сами, а не прокруткой страницы
-      if (manual) return show(active < 0 ? 0 : active);
-      show(Math.floor(clamp(p, 0, 0.9999) * total));
+      if (stage) stage.state.services = p;
+      const f = clamp(p, 0, 0.9999) * total;
+      setActive(Math.floor(f));
+      for (let i = 0; i < total; i++) ticks[i].style.setProperty('--t', clamp(f - i).toFixed(3));
     },
   });
   setActive(0);
 
   function goTo(i) {
-    if (manual) {
-      lastTouch = performance.now();
-      return show(((i % total) + total) % total);
-    }
     if (i < 0) return;
+    // после последней услуги — дальше по странице
     if (i >= total) return scrollToY(end + window.innerHeight * 0.6);
     scrollToY(start + ((i + 0.5) / total) * (end - start));
   }
-
-  // без подсказок на экране: услуги сменяются сами, пока раздел в окне;
-  // после жеста пользователя автосмена берёт паузу
-  setInterval(() => {
-    if (!manual || !inView || document.hidden) return;
-    if (performance.now() - lastTouch < 7000) return;
-    show((active + 1) % total);
-  }, 3400);
+  prevBtn.addEventListener('click', () => goTo(active - 1));
+  nextBtn.addEventListener('click', () => goTo(active + 1));
 
   // список кликабелен: услуга открывается прокруткой к своему шагу
   items.forEach((el, i) =>
