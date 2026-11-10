@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Контур Главное — дизайн-токены и шрифты
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Inter Display';
+  src: url('../assets/fonts/InterDisplay-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Display';
+  src: url('../assets/fonts/InterDisplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Display';
+  src: url('../assets/fonts/InterDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Цвет: монохром. Тёплый блик взят из свечения на логотипе и используется точечно. */
+  --black: #000;
+  --graphite: #121214;
+  --graphite-2: #1c1d20;
+  --grey: #2e2f33;
+  --silver: #a9abb0;
+  --silver-dim: #6c6e73;
+  --white: #fff;
+  --glint: #ffd7b5;
+
+  --bg: var(--black);
+  --fg: var(--white);
+  --line: rgba(255, 255, 255, 0.14);
+
+  /* Шрифты */
+  --ff-display: 'Inter Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --ff-text: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Геометрия логотипа: наклон 56,76° к горизонтали */
+  --skew: -33.24deg;
+  --run: 0.6554; /* сдвиг по горизонтали на единицу высоты */
+
+  /* Сетка и отступы */
+  --pad: clamp(20px, 4.4vw, 72px);
+  --nav-h: clamp(64px, 6.4vw, 92px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --vh: 1vh;
+
+  /* Движение */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+@supports (height: 100svh) {
+  :root {
+    --vh: 1svh;
+  }
+}

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Контур Главное — рекламное агентство полного цикла</title>
+  <meta name="description" content="Создаём идеи, которые привлекают внимание. Разрабатываем бренды, рекламу и продвижение. Делаем так, чтобы главное было заметно.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Контур Главное">
+  <meta property="og:title" content="Контур Главное — делаем главное заметным">
+  <meta property="og:description" content="Рекламное агентство полного цикла. Идеи, бренды, реклама и продвижение.">
+  <meta property="og:image" content="assets/brand/og.png">
+
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/InterDisplay-ExtraBold.woff" as="font" type="font/woff" crossorigin>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sections.css">
+
+  <script>(function(d){d.classList.add('js');try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion')}catch(e){d.classList.add('motion')}})(document.documentElement);</script>
+  <noscript><style>.intro{display:none!important}</style></noscript>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Контур Главное",
+    "description": "Рекламное агентство полного цикла",
+    "slogan": "Делаем главное заметным"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Перейти к содержанию</a>
+
+  <!-- Вступление: логотип прорисовывается линией. Наполняется в js/intro.js -->
+  <div class="intro" id="intro" role="status" aria-label="Загрузка сайта">
+    <div class="intro__stage" id="intro-stage"></div>
+    <p class="intro__caption">Рекламное агентство полного цикла</p>
+    <button class="intro__skip" type="button" id="intro-skip">Пропустить</button>
+  </div>
+
+  <!-- Фоновые графитовые плоскости и линия-контур, которая проходит через всю страницу -->
+  <div class="atmo" id="atmo" aria-hidden="true"></div>
+  <canvas class="figure" id="figure" aria-hidden="true"></canvas>
+
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="#glavnaya" aria-label="Контур Главное — в начало страницы">
+      <span class="nav__logo-fallback">Контур Главное</span>
+    </a>
+    <nav class="nav__links" aria-label="Основная навигация">
+      <a class="nav__link" href="#uslugi">Услуги</a>
+      <a class="nav__link" href="#proekty">Проекты</a>
+      <a class="nav__link" href="#podhod">Подход</a>
+      <a class="nav__link" href="#pochemu">Почему мы</a>
+      <a class="nav__link" href="#kontakty">Контакты</a>
+      <span class="nav__marker" aria-hidden="true"></span>
+    </nav>
+    <a class="btn btn--sm nav__cta" href="#kontakty" data-open-brief data-magnetic><span class="btn__label">Обсудить проект</span></a>
+    <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="menu">
+      <span class="nav__toggle-label" data-open="Закрыть" data-closed="Меню">Меню</span>
+      <span class="nav__toggle-icon" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </header>
+
+  <div class="progress" id="progress" aria-hidden="true">
+    <span class="progress__num" id="progress-num">01</span>
+    <span class="progress__bar"><i id="progress-fill"></i></span>
+    <span class="progress__total">06</span>
+  </div>
+
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Меню" hidden>
+    <div class="menu__bg" aria-hidden="true"></div>
+    <div class="menu__contour" id="menu-contour" aria-hidden="true"></div>
+    <nav class="menu__nav" aria-label="Разделы сайта">
+      <ol class="menu__list">
+        <li><a class="menu__link" href="#glavnaya"><span class="menu__n">01</span><span class="menu__label">Главная</span></a></li>
+        <li><a class="menu__link" href="#uslugi"><span class="menu__n">02</span><span class="menu__label">Услуги</span></a></li>
+        <li><a class="menu__link" href="#proekty"><span class="menu__n">03</span><span class="menu__label">Проекты</span></a></li>
+        <li><a class="menu__link" href="#podhod"><span class="menu__n">04</span><span class="menu__label">Подход</span></a></li>
+        <li><a class="menu__link" href="#pochemu"><span class="menu__n">05</span><span class="menu__label">Почему мы</span></a></li>
+        <li><a class="menu__link" href="#kontakty"><span class="menu__n">06</span><span class="menu__label">Контакты</span></a></li>
+      </ol>
+    </nav>
+    <div class="menu__foot">
+      <a class="btn menu__cta" href="#kontakty" data-open-brief><span class="btn__label">Обсудить проект</span></a>
+      <p class="menu__note">Рекламное агентство полного цикла</p>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- 01 · Главная -->
+    <section class="hero" id="glavnaya" data-section="01" aria-labelledby="hero-title">
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__line hero__line--1"><span class="hero__word">Мы делаем</span></span>
+        <span class="hero__line hero__line--2"><span class="hero__word" id="hero-focus">главное</span></span>
+        <span class="hero__line hero__line--3"><span class="hero__word">заметным.</span></span>
+      </h1>
+      <div class="hero__lead">
+        <p class="hero__kicker">Рекламное агентство полного цикла.</p>
+        <p class="hero__text">Создаём идеи, которые привлекают внимание. Разрабатываем бренды, рекламу и&nbsp;продвижение.</p>
+      </div>
+      <a class="hero__scroll" href="#uslugi">
+        <span class="hero__scroll-label">Пролистайте ниже</span>
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <!-- 02 · Чем мы занимаемся -->
+    <section class="services" id="uslugi" data-section="02" aria-labelledby="services-title">
+      <div class="services__pin">
+        <header class="services__head">
+          <p class="label" data-fade><span class="label__n">02</span>Чем мы занимаемся</p>
+          <h2 class="services__title" data-lines id="services-title">От&nbsp;идеи<br>до&nbsp;результата.</h2>
+          <p class="services__lead" data-fade>Объединяем стратегию, креатив, дизайн и&nbsp;рекламу, чтобы создавать решения, которые работают на&nbsp;ваш бизнес.</p>
+        </header>
+
+        <div class="services__stage" id="services-stage" aria-hidden="true">
+          <span class="services__count" id="services-count">01</span>
+        </div>
+
+        <ol class="services__list" id="services-list">
+          <li class="service is-active">
+            <span class="service__n">01</span>
+            <div class="service__body">
+              <h3 class="service__title">Брендинг и&nbsp;фирменный стиль</h3>
+              <p class="service__text">Имя, знак, характер. Собираем систему, по&nbsp;которой бренд узнают без подписи.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">02</span>
+            <div class="service__body">
+              <h3 class="service__title">Разработка рекламных концепций</h3>
+              <p class="service__text">Ищем мысль, на&nbsp;которой держится кампания: от&nbsp;наблюдения до&nbsp;ключевого образа.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">03</span>
+            <div class="service__body">
+              <h3 class="service__title">Креатив и&nbsp;графический дизайн</h3>
+              <p class="service__text">Плакаты, упаковка, ключевые визуалы. Форма, которая работает на&nbsp;смысл.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">04</span>
+            <div class="service__body">
+              <h3 class="service__title">Разработка сайтов и&nbsp;digital-продуктов</h3>
+              <p class="service__text">Проектируем и&nbsp;собираем сайты, которыми удобно пользоваться и&nbsp;которые запоминаются.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">05</span>
+            <div class="service__body">
+              <h3 class="service__title">Контекстная и&nbsp;таргетированная реклама</h3>
+              <p class="service__text">Настраиваем показы так, чтобы сообщение приходило к&nbsp;тем, кому оно нужно.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">06</span>
+            <div class="service__body">
+              <h3 class="service__title">Digital-продвижение</h3>
+              <p class="service__text">Соцсети, контент, спецпроекты. Выстраиваем присутствие бренда там, где его аудитория.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">07</span>
+            <div class="service__body">
+              <h3 class="service__title">Маркетинговые стратегии</h3>
+              <p class="service__text">Изучаем рынок и&nbsp;аудиторию, расставляем приоритеты, намечаем маршрут.</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service__n">08</span>
+            <div class="service__body">
+              <h3 class="service__title">Комплексное рекламное сопровождение</h3>
+              <p class="service__text">Ведём бренд на&nbsp;всех этапах: одна команда, единая логика, общий результат.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="services__ticks" id="services-ticks" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 03 · Избранные проекты -->
+    <section class="works" id="proekty" data-section="03" aria-labelledby="works-title">
+      <div class="works__pin">
+        <div class="works__track" id="works-track">
+          <header class="works__intro">
+            <p class="label" data-fade><span class="label__n">03</span>Избранные проекты</p>
+            <h2 class="works__title" data-lines id="works-title">Идеи, которые становятся заметными.</h2>
+            <p class="works__note" data-fade>Здесь показаны демонстрационные концепты, а&nbsp;не&nbsp;работы для реальных клиентов. Так мы показываем подход и&nbsp;уровень исполнения.</p>
+          </header>
+
+          <div class="works__rail" id="works-rail" tabindex="0" role="group" aria-label="Проекты: листайте в сторону">
+            <article class="work work--tall" data-slug="tishe">
+              <a class="work__link" href="#proekt-tishe" data-cursor="view">
+                <div class="work__media"><div class="work__art" data-art="tishe"></div></div>
+                <div class="work__meta">
+                  <p class="work__cat"><span class="work__tag">Концепт</span>Рекламная концепция</p>
+                  <h3 class="work__title">Тише</h3>
+                  <p class="work__desc">Кампания для сервиса шумоизоляции: чем меньше шума в&nbsp;макете, тем громче сообщение.</p>
+                  <span class="work__more">Смотреть проект</span>
+                </div>
+              </a>
+            </article>
+
+            <article class="work work--wide work--low" data-slug="zerno">
+              <a class="work__link" href="#proekt-zerno" data-cursor="view">
+                <div class="work__media"><div class="work__art" data-art="zerno"></div></div>
+                <div class="work__meta">
+                  <p class="work__cat"><span class="work__tag">Концепт</span>Брендинг и&nbsp;фирменный стиль</p>
+                  <h3 class="work__title">Зерно</h3>
+                  <p class="work__desc">Айдентика обжарочной: знак из&nbsp;одного зерна и&nbsp;строгая типографика без кофейных клише.</p>
+                  <span class="work__more">Смотреть проект</span>
+                </div>
+              </a>
+            </article>
+
+            <article class="work work--land" data-slug="os">
+              <a class="work__link" href="#proekt-os" data-cursor="view">
+                <div class="work__media"><div class="work__art" data-art="os"></div></div>
+                <div class="work__meta">
+                  <p class="work__cat"><span class="work__tag">Концепт</span>Сайт</p>
+                  <h3 class="work__title">Ось</h3>
+                  <p class="work__desc">Сайт архитектурного бюро: одна линия ведёт посетителя через все проекты.</p>
+                  <span class="work__more">Смотреть проект</span>
+                </div>
+              </a>
+            </article>
+
+            <article class="work work--square work--low" data-slug="sol">
+              <a class="work__link" href="#proekt-sol" data-cursor="view">
+                <div class="work__media"><div class="work__art" data-art="sol"></div></div>
+                <div class="work__meta">
+                  <p class="work__cat"><span class="work__tag">Концепт</span>Графический дизайн</p>
+                  <h3 class="work__title">Соль</h3>
+                  <p class="work__desc">Упаковка линейки специй: крупные цифры вместо иллюстраций.</p>
+                  <span class="work__more">Смотреть проект</span>
+                </div>
+              </a>
+            </article>
+
+            <article class="work work--tall" data-slug="marshrut">
+              <a class="work__link" href="#proekt-marshrut" data-cursor="view">
+                <div class="work__media"><div class="work__art" data-art="marshrut"></div></div>
+                <div class="work__meta">
+                  <p class="work__cat"><span class="work__tag">Концепт</span>Digital-продвижение</p>
+                  <h3 class="work__title">Маршрут</h3>
+                  <p class="work__desc">Запуск городского гида в&nbsp;соцсетях: серия форматов, связанных одной линией.</p>
+                  <span class="work__more">Смотреть проект</span>
+                </div>
+              </a>
+            </article>
+
+            <article class="work work--wide" data-slug="svet">
+              <a class="work__link" href="#proekt-svet" data-cursor="view">
+                <div class="work__media"><div class="work__art" data-art="svet"></div></div>
+                <div class="work__meta">
+                  <p class="work__cat"><span class="work__tag">Концепт</span>Наружная реклама</p>
+                  <h3 class="work__title">Свет</h3>
+                  <p class="work__desc">Кампания фестиваля света: щит, который сам становится источником света.</p>
+                  <span class="work__more">Смотреть проект</span>
+                </div>
+              </a>
+            </article>
+          </div>
+
+          <div class="works__outro">
+            <p class="works__outro-text" data-lines>Покажем, как это может выглядеть для вашего бренда.</p>
+            <a class="btn" href="#kontakty" data-open-brief data-magnetic><span class="btn__label">Обсудить проект</span></a>
+          </div>
+        </div>
+
+        <div class="works__hud" aria-hidden="true">
+          <span class="works__hud-num" id="works-num">01</span>
+          <span class="works__hud-bar"><i id="works-fill"></i></span>
+          <span class="works__hud-total">06</span>
+          <span class="works__hud-hint">Листайте в&nbsp;сторону</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Наш подход -->
+    <section class="approach" id="podhod" data-section="04" aria-labelledby="approach-title">
+      <div class="approach__pin">
+        <div class="approach__noise" id="approach-noise" aria-hidden="true"></div>
+        <p class="label approach__label"><span class="label__n">04</span>Наш подход</p>
+        <h2 class="approach__title" id="approach-title">
+          <span class="approach__a" id="approach-a">Не&nbsp;просто делаем рекламу.</span>
+          <span class="approach__b" id="approach-b">
+            <span class="approach__row"><span class="approach__w">Создаём</span></span>
+            <span class="approach__row"><span class="approach__w">повод</span></span>
+            <span class="approach__row approach__row--key"><span class="approach__mask"><span class="approach__w" id="approach-key">заметить</span></span><span class="approach__dot" id="approach-dot" aria-hidden="true"></span><span class="sr-only">.</span></span>
+          </span>
+        </h2>
+        <p class="approach__text" id="approach-text">Рекламы вокруг много. Замечают ту, в&nbsp;которой есть причина остановиться: точная мысль, ясная форма, верный момент.</p>
+        <div class="approach__frame" id="approach-frame" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 05 · Почему мы -->
+    <section class="why" id="pochemu" data-section="05" aria-labelledby="why-title">
+      <div class="why__inner">
+        <p class="label" data-fade><span class="label__n">05</span>Почему мы</p>
+        <h2 class="why__title" id="why-title">
+          <span class="why__quiet" data-lines>Важно не&nbsp;просто быть.</span>
+          <span class="why__loud" data-lines>Важно быть заметным.</span>
+        </h2>
+
+        <ul class="why__list" id="why-list">
+          <li class="principle">
+            <h3 class="principle__title">Думаем стратегически</h3>
+            <p class="principle__text">Сначала вопрос «зачем», потом «как». Решение опирается на&nbsp;задачу бизнеса, а&nbsp;не&nbsp;на&nbsp;вкус.</p>
+          </li>
+          <li class="principle">
+            <h3 class="principle__title">Создаём нестандартные идеи</h3>
+            <p class="principle__text">Ищем ход, который не&nbsp;повторяет соседей по&nbsp;рынку и&nbsp;подходит именно этому бренду.</p>
+          </li>
+          <li class="principle">
+            <h3 class="principle__title">Объединяем разные рекламные инструменты</h3>
+            <p class="principle__text">Бренд, креатив, сайт и&nbsp;продвижение работают как одна система, а&nbsp;не&nbsp;набор подрядчиков.</p>
+          </li>
+          <li class="principle">
+            <h3 class="principle__title">Работаем с&nbsp;визуальной коммуникацией</h3>
+            <p class="principle__text">Форма&nbsp;— часть сообщения. Следим за&nbsp;каждой деталью, потому что её&nbsp;видит ваш клиент.</p>
+          </li>
+          <li class="principle">
+            <h3 class="principle__title">Смотрим на&nbsp;результат комплексно</h3>
+            <p class="principle__text">Оцениваем работу целиком: как выглядит, как звучит и&nbsp;что меняет для бизнеса.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06 · Контакты -->
+    <section class="contact" id="kontakty" data-section="06" aria-labelledby="contact-title">
+      <div class="contact__pin">
+        <div class="contact__curtain" id="contact-curtain" aria-hidden="true"></div>
+        <div class="contact__echo" id="contact-echo" aria-hidden="true"></div>
+        <div class="contact__body">
+          <p class="label contact__label"><span class="label__n">06</span>Контакты</p>
+          <h2 class="contact__title" id="contact-title">
+            <span class="contact__word">Есть</span>
+            <span class="contact__word">идея?</span>
+          </h2>
+          <p class="contact__lead">Давайте сделаем её&nbsp;заметной.</p>
+          <button class="btn btn--xl contact__cta" type="button" data-open-brief data-magnetic>
+            <span class="btn__label">Обсудить проект</span>
+            <span class="btn__arrow" aria-hidden="true"></span>
+          </button>
+          <ul class="contact__channels" id="contact-channels"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <a class="footer__logo" href="#glavnaya" aria-label="Контур Главное — в начало страницы"></a>
+    <p class="footer__about">Рекламное агентство полного цикла</p>
+    <nav class="footer__nav" aria-label="Навигация в подвале">
+      <a href="#uslugi">Услуги</a>
+      <a href="#proekty">Проекты</a>
+      <a href="#podhod">Подход</a>
+      <a href="#pochemu">Почему мы</a>
+    </nav>
+    <p class="footer__copy">© <span id="year">2026</span> Контур Главное</p>
+    <a class="footer__top" href="#glavnaya"><span>Наверх</span><i aria-hidden="true"></i></a>
+  </footer>
+
+  <!-- Страница проекта -->
+  <div class="project" id="project" role="dialog" aria-modal="true" aria-labelledby="project-title" hidden>
+    <div class="project__bar">
+      <p class="project__badge">Демонстрационный концепт</p>
+      <button class="project__close" type="button" id="project-close"><span>Закрыть</span><i aria-hidden="true"></i></button>
+    </div>
+    <div class="project__scroll" id="project-scroll">
+      <article class="project__inner" id="project-inner"></article>
+    </div>
+  </div>
+
+  <!-- Заявка -->
+  <div class="brief" id="brief" role="dialog" aria-modal="true" aria-labelledby="brief-title" hidden>
+    <div class="brief__backdrop" data-close-brief></div>
+    <div class="brief__panel">
+      <button class="brief__close" type="button" data-close-brief><span>Закрыть</span><i aria-hidden="true"></i></button>
+      <h2 class="brief__title" id="brief-title">Расскажите о&nbsp;задаче</h2>
+      <p class="brief__lead" id="brief-lead">Пара строк о&nbsp;проекте&nbsp;— этого достаточно, чтобы начать разговор.</p>
+
+      <form class="brief__form" id="brief-form" novalidate>
+        <fieldset class="brief__chips">
+          <legend>Что вас интересует</legend>
+          <div class="brief__chips-list" id="brief-chips"></div>
+        </fieldset>
+        <label class="field">
+          <span class="field__label">Как к&nbsp;вам обращаться</span>
+          <input class="field__input" type="text" name="name" autocomplete="name" maxlength="80">
+        </label>
+        <label class="field">
+          <span class="field__label">Телефон, почта или мессенджер</span>
+          <input class="field__input" type="text" name="contact" autocomplete="email" maxlength="120" required aria-describedby="brief-error">
+        </label>
+        <label class="field">
+          <span class="field__label">Что нужно сделать</span>
+          <textarea class="field__input field__input--area" name="task" rows="3" maxlength="1200"></textarea>
+        </label>
+        <p class="brief__error" id="brief-error" role="alert" hidden>Укажите, как с&nbsp;вами связаться.</p>
+
+        <div class="brief__actions">
+          <button class="btn btn--solid" type="submit" id="brief-submit"><span class="btn__label">Скопировать заявку</span></button>
+          <p class="brief__status" id="brief-status" role="status" aria-live="polite"></p>
+        </div>
+        <div class="brief__channels" id="brief-channels"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><span class="cursor__label">Смотреть</span></span></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
