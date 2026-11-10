@@ -14,15 +14,32 @@ export function initServices({ stage }) {
   const items = $$('.service', section);
   const count = $('#services-count');
   const ticksHost = $('#services-ticks');
+  const stageEl = $('#services-stage');
   const total = items.length;
 
-  const ticks = items.map(() => {
-    const t = document.createElement('span');
+  // навигация по услугам: стрелки, полоски-шаги, свайп и нажатие
+  const mkArrow = (cls, label) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `services__arrow ${cls}`;
+    b.setAttribute('aria-label', label);
+    return b;
+  };
+  const prevBtn = mkArrow('services__arrow--prev', 'Предыдущая услуга');
+  const nextBtn = mkArrow('services__arrow--next', 'Следующая услуга');
+  ticksHost.removeAttribute('aria-hidden');
+  ticksHost.appendChild(prevBtn);
+  const ticks = items.map((_, i) => {
+    const t = document.createElement('button');
+    t.type = 'button';
     t.className = 'services__tick';
+    t.setAttribute('aria-label', `Услуга ${i + 1} из ${total}`);
     t.appendChild(document.createElement('i'));
+    t.addEventListener('click', () => goTo(i));
     ticksHost.appendChild(t);
     return t.firstChild;
   });
+  ticksHost.appendChild(nextBtn);
 
   let active = -1;
   function setActive(i) {
@@ -61,13 +78,51 @@ export function initServices({ stage }) {
   });
   setActive(0);
 
-  // на десктопе список кликабелен: услуга открывается прокруткой к своему шагу
+  function goTo(i) {
+    if (i < 0) return;
+    // после последней услуги — дальше по странице
+    if (i >= total) return scrollToY(end + window.innerHeight * 0.6);
+    scrollToY(start + ((i + 0.5) / total) * (end - start));
+  }
+  prevBtn.addEventListener('click', () => goTo(active - 1));
+  nextBtn.addEventListener('click', () => goTo(active + 1));
+
+  // список кликабелен: услуга открывается прокруткой к своему шагу
+  items.forEach((el, i) =>
+    el.addEventListener('click', () => {
+      if (isDesktop()) goTo(i);
+    })
+  );
+
+  // свайп влево/вправо листает услуги; вертикальный жест остаётся обычной прокруткой
+  let touch = null;
+  pin.addEventListener(
+    'touchstart',
+    (e) => {
+      const t = e.touches[0];
+      touch = e.touches.length === 1 ? { x: t.clientX, y: t.clientY, time: e.timeStamp } : null;
+    },
+    { passive: true }
+  );
+  pin.addEventListener(
+    'touchend',
+    (e) => {
+      if (!touch) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touch.x;
+      const dy = t.clientY - touch.y;
+      const quick = e.timeStamp - touch.time < 350;
+      const isTap = Math.abs(dx) < 10 && Math.abs(dy) < 10 && quick;
+      const target = e.target;
+      touch = null;
+      if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy) * 1.4) return goTo(active + (dx < 0 ? 1 : -1));
+      // нажатие на поле со знаком: правая часть — вперёд, левая — назад
+      if (isTap && target.closest('.services__stage')) goTo(active + (t.clientX > window.innerWidth * 0.35 ? 1 : -1));
+    },
+    { passive: true }
+  );
   if (FINE_POINTER) {
-    items.forEach((el, i) =>
-      el.addEventListener('click', () => {
-        if (isDesktop()) scrollToY(start + ((i + 0.3) / total) * (end - start));
-      })
-    );
+    stageEl.addEventListener('click', (e) => goTo(active + (e.clientX > stageEl.getBoundingClientRect().left + stageEl.offsetWidth * 0.35 ? 1 : -1)));
   }
 
   setAnchor('uslugi', () => start + 2);

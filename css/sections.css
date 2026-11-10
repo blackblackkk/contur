@@ -323,17 +323,26 @@
   letter-spacing: -0.03em;
   text-transform: uppercase;
 }
+.motion .services__pin {
+  touch-action: pan-y;
+}
+.motion .services__stage {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
 .motion .services__ticks {
   display: flex;
-  gap: 6px;
+  align-items: center;
+  gap: 5px;
   flex: none;
-  margin-top: 14px;
+  margin: 6px -8px 0;
 }
 .services__tick {
   flex: 1;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.18);
-  overflow: hidden;
+  height: 44px;
+  padding: 21px 0;
+  background: rgba(255, 255, 255, 0.2);
+  background-clip: content-box;
 }
 .services__tick i {
   display: block;
@@ -341,6 +350,28 @@
   background: var(--white);
   transform-origin: 0 50%;
   transform: scaleX(var(--t, 0));
+}
+.services__arrow {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+}
+.services__arrow::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -7px;
+  border-top: 1.5px solid var(--white);
+  border-right: 1.5px solid var(--white);
+  transform: rotate(45deg);
+}
+.services__arrow--prev::before {
+  margin-left: -3px;
+  transform: rotate(-135deg);
 }
 
 @media (min-height: 760px) and (max-width: 899px) {
