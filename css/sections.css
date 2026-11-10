@@ -326,22 +326,6 @@
 .motion .services__pin {
   touch-action: pan-y;
 }
-/* На сенсорных экранах прокрутка «прилипает» к каждой услуге:
-   один жест — одна услуга, быстрый взмах не пролетает сцену насквозь. */
-.services__snap {
-  position: absolute;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-@media (hover: none) and (pointer: coarse) {
-  html.motion {
-    scroll-snap-type: y proximity;
-  }
-}
 .motion .services__stage {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;

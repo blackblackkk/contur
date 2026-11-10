@@ -41,15 +41,6 @@ export function initServices({ stage }) {
   });
   ticksHost.appendChild(nextBtn);
 
-  // точки привязки: на телефоне прокрутка останавливается на каждой услуге
-  const snaps = items.map(() => {
-    const s = document.createElement('i');
-    s.className = 'services__snap';
-    s.setAttribute('aria-hidden', 'true');
-    section.appendChild(s);
-    return s;
-  });
-
   let active = -1;
   function setActive(i) {
     if (i === active) return;
@@ -76,7 +67,6 @@ export function initServices({ stage }) {
     measure: () => {
       start = docTop(section);
       end = start + section.offsetHeight - pin.offsetHeight;
-      snaps.forEach((s, i) => (s.style.top = Math.round(((i + 0.5) / total) * (end - start)) + 'px'));
       return { start, end };
     },
     update: (p) => {
