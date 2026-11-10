@@ -35,7 +35,9 @@ export function initSettle() {
     const step = (s1 - s0) / 8;
     zones = [
       // первый экран → восемь услуг → начало проектов
-      { from: 0, to: docTop(works), points: [0, ...Array.from({ length: 8 }, (_, i) => s0 + step * (i + 0.5)), docTop(works)] },
+      window.innerWidth < 900
+        ? { from: 0, to: s0 + 2, points: [0, s0 + 2] }
+        : { from: 0, to: docTop(works), points: [0, ...Array.from({ length: 8 }, (_, i) => s0 + step * (i + 0.5)), docTop(works)] },
       // «Наш подход»: фраза набрана → вторая фраза целиком → белый экран следующего раздела
       { from: a0 - vh * 0.5, to: a1 + 4, points: [a0 + (a1 - a0) * 0.19, a0 + (a1 - a0) * 0.72, a1 + 4] },
       // «Контакты»: шторка и заголовок доигрываются до конца
