@@ -56,21 +56,24 @@ export function initStage() {
     );
   }
 
-  // Знаки услуг сменяются по времени, а не «привязаны» к колесу:
-  // переход всегда доигрывается до конца и не дёргается при остановке прокрутки.
+  // Знаки услуг сменяются по времени, без «перетекания» геометрии:
+  // прежний знак гаснет, новый прорисовывается линией. Никаких изломов по пути.
   const snap = makeShape();
+  const cur = makeShape();
   const morph = { to: 0, m: 1 };
-  const MORPH_MS = 900;
-  function serviceAt(shape, index, box, dt) {
+  const MORPH_MS = 1000;
+  function renderService(index, box, dt, tx, ty) {
     if (index !== morph.to) {
-      copy(snap, out);
+      copy(snap, cur);
       morph.to = index;
       morph.m = 0;
     }
-    serviceShape(b, index, box);
-    if (morph.m >= 1) return copy(shape, b);
+    serviceShape(cur, index, box);
+    if (morph.m >= 1) return figure.render(cur, { tx, ty });
     morph.m = Math.min(1, morph.m + dt / MORPH_MS);
-    return blend(shape, snap, b, morph.m, 0.3);
+    const m = morph.m;
+    figure.render(snap, { alpha: 1 - ease.outCubic(span(m, 0, 0.45)), tx, ty });
+    figure.render(cur, { alpha: span(m, 0.12, 0.4), draw: ease.inOutCubic(span(m, 0.12, 1)), tx, ty, keep: true });
   }
 
   function copy(dst, src) {
@@ -127,8 +130,7 @@ export function initStage() {
     // 2. услуги
     if (s <= m.servicesEnd) {
       const index = Math.floor(clamp(state.services, 0, 0.9999) * SERVICE_COUNT);
-      serviceAt(out, index, stageEl.getBoundingClientRect(), dt);
-      return figure.render(out, { tx, ty });
+      return renderService(index, stageEl.getBoundingClientRect(), dt, tx, ty);
     }
 
     // 3. рамка летит к первому проекту
