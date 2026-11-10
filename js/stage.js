@@ -115,10 +115,12 @@ export function initStage() {
       const box = stageEl.getBoundingClientRect();
       serviceBracketShape(a, box);
       blend(out, hero, a, t, 0);
-      figure.render(out, { draw: state.draw, tx: tx * t, ty: ty * t });
+      // по пути линия гаснет, чтобы не перечёркивать текст, и проявляется уже у услуг
+      const fly = Math.max(1 - span(t, 0.04, 0.26), span(t, 0.7, 0.94));
+      figure.render(out, { alpha: fly, draw: state.draw, tx: tx * t, ty: ty * t });
       morph.to = 0;
       morph.m = 1;
-      const rest = span(t, 0.72, 1);
+      const rest = span(t, 0.8, 1);
       if (rest > 0) {
         serviceShape(b, 0, box);
         b.a[0] = 0;
