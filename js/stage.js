@@ -5,7 +5,7 @@
  *   → услуги       — восемь знаков, по одному на услугу
  *   → проекты      — рамка, которая становится обложкой первого проекта
  */
-import { Figure, makeShape, serviceShape, heroShape, frameShape, blend, SERVICE_COUNT } from './figure.js';
+import { Figure, makeShape, serviceShape, serviceBracketShape, heroShape, frameShape, blend, SERVICE_COUNT } from './figure.js';
 import { $, clamp, span, capBox, resetCapCache, ease, tween, MOTION, FINE_POINTER, isDesktop } from './utils.js';
 import { onFrame, docTop, scroll } from './scroll.js';
 
@@ -102,9 +102,18 @@ export function initStage() {
         if (cap.bottom < -80) return figure.clear();
         return figure.render(hero, { draw: state.draw, glint: state.draw < 1 });
       }
-      serviceShape(a, 0, stageEl.getBoundingClientRect());
-      blend(out, hero, a, t, 0.4);
-      return figure.render(out, { draw: state.draw, tx: tx * t, ty: ty * t });
+      // скобка переезжает к услугам цельной линией; остальные детали знака проявляются в конце
+      const box = stageEl.getBoundingClientRect();
+      serviceBracketShape(a, box);
+      blend(out, hero, a, t, 0);
+      figure.render(out, { draw: state.draw, tx: tx * t, ty: ty * t });
+      const rest = span(t, 0.72, 1);
+      if (rest > 0) {
+        serviceShape(b, 0, box);
+        b.a[0] = 0;
+        figure.render(b, { alpha: rest, tx: tx * t, ty: ty * t, keep: true });
+      }
+      return;
     }
 
     // 2. услуги

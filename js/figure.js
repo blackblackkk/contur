@@ -280,6 +280,33 @@ export function serviceShape(shape, index, box) {
   return shape;
 }
 
+const tiled = new Float32Array((S * (P - 1) + 1) * 2);
+let tiledReady = false;
+/**
+ * Контур первого знака услуг, нарезанный так же, как скобка первого экрана.
+ * Благодаря этому скобка переезжает к услугам одной цельной линией, без осколков.
+ */
+export function serviceBracketShape(shape, box) {
+  if (!tiledReady) {
+    resample(bracketPoints({ x: -0.56, y: -0.5, w: 1.22, h: 1 }), S * (P - 1) + 1, tiled, 0);
+    tiledReady = true;
+  }
+  const u = Math.min(box.width / 2.5, box.height / 2.2);
+  const cx = box.left + box.width / 2;
+  const cy = box.top + box.height / 2;
+  for (let s = 0; s < S; s++) {
+    for (let i = 0; i < P; i++) {
+      const k = (s * (P - 1) + i) * 2;
+      shape.pts[(s * P + i) * 2] = cx + tiled[k] * u;
+      shape.pts[(s * P + i) * 2 + 1] = cy + tiled[k + 1] * u;
+    }
+    shape.w[s] = BOLD;
+    shape.a[s] = 1;
+    shape.z[s] = 0.6;
+  }
+  return shape;
+}
+
 const heroCache = { key: '', rel: new Float32Array((S * (P - 1) + 1) * 2) };
 
 /**
@@ -384,10 +411,10 @@ export class Figure {
    * @param {number} o.ty     сдвиг слоёв по Y
    * @param {boolean} o.glint светящаяся точка на конце линии
    */
-  render(shape, { alpha = 1, draw = 1, tx = 0, ty = 0, glint = false } = {}) {
+  render(shape, { alpha = 1, draw = 1, tx = 0, ty = 0, glint = false, keep = false } = {}) {
     const ctx = this.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    if (!keep) ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.dirty = true;
     if (alpha <= 0.004 || draw <= 0) return;
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);

@@ -258,7 +258,7 @@
 
 /* --- закреплённая сцена --- */
 .motion .services {
-  height: calc(var(--vh) * 620);
+  height: calc(var(--vh) * 470);
   padding: 0;
 }
 .motion .services__pin {
@@ -354,6 +354,9 @@
   .services__pin {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: 6vw;
+  }
+  .motion .services {
+    height: calc(var(--vh) * 540);
   }
   .motion .services__pin {
     display: grid;
