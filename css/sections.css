@@ -928,7 +928,7 @@ html:not(.js) .works__hud {
 }
 
 .motion .approach {
-  height: calc(var(--vh) * 520);
+  height: calc(var(--vh) * 380);
   padding: 0;
 }
 .motion .approach__pin {
@@ -1061,6 +1061,9 @@ html:not(.js) .works__hud {
 @media (min-width: 900px) {
   .approach__b {
     font-size: min(15vw, 24.5vh);
+  }
+  .motion .approach {
+    height: calc(var(--vh) * 520);
   }
   .motion .approach__b {
     top: 57.5%;

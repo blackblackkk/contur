@@ -15,6 +15,7 @@ import { initContact } from './contact.js';
 import { initBrief } from './brief.js';
 import { initCursor } from './cursor.js';
 import { runIntro } from './intro.js';
+import { initSettle } from './settle.js';
 
 const nav = initNav();
 const atmo = initAtmo();
@@ -27,6 +28,7 @@ const why = initWhy();
 initContact();
 initBrief({ onOpen: nav.closeMenu });
 initCursor();
+const settle = initSettle();
 
 /* Появление заголовков по строкам и спокойное проявление подписей */
 const lineBlocks = MOTION ? $$('[data-lines]') : [];
@@ -56,6 +58,7 @@ function measureAll() {
   nav.measure();
   works.measure();
   why.measure();
+  settle.measure();
 }
 
 splitAll();
