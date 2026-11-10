@@ -22,7 +22,7 @@ export function channelsMarkup() {
   return rows;
 }
 
-const ECHOES = 5;
+const ECHOES = 2;
 
 export function initContact() {
   const section = $('#kontakty');
@@ -56,16 +56,31 @@ export function initContact() {
     const pr = pin.getBoundingClientRect();
     const tr = title.getBoundingClientRect();
     echoSvg.setAttribute('viewBox', `0 0 ${pr.width} ${pr.height}`);
-    const x0 = tr.left - pr.left;
-    const y0 = tr.top - pr.top;
+    // Контуры живут только в свободном поле и не пересекают заголовок:
+    // на широком экране — справа от него, на узком — в полосе над ним.
+    const titleTop = tr.top - pr.top;
+    const titleRight = tr.right - pr.left;
+    const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+    const beside = pr.width - titleRight > pr.width * 0.24;
     echoes.forEach((path, i) => {
-      const grow = (i + 1) * Math.min(pr.width, pr.height) * 0.07;
-      const h = tr.height + grow * 2;
-      const x = Math.max(x0 + tr.width * 0.08 - grow * 0.4, h * RUN + 6);
-      const w = tr.width * (0.5 + i * 0.07);
-      path.setAttribute('d', pointsToPath(bracketPoints({ x, y: y0 - grow, w, h, bottom: 0.55 + i * 0.05 })));
-      path.setAttribute('stroke-width', i === 0 ? 2 : 1.25);
-      path.style.opacity = String([0.9, 0.55, 0.36, 0.22, 0.12][i]);
+      const inset = i * Math.max(12, pr.width * 0.014);
+      let x, y, h;
+      if (beside) {
+        h = pr.height * 0.36 - inset * 2;
+        y = navH + pr.height * 0.06 + inset;
+        x = titleRight + pr.width * 0.05 + h * RUN + inset;
+      } else {
+        y = navH + 8 + inset;
+        h = titleTop - y - 18 - inset;
+        x = pr.width * 0.52 + h * RUN + inset;
+      }
+      if (h < 36) {
+        path.setAttribute('d', '');
+        return;
+      }
+      path.setAttribute('d', pointsToPath(bracketPoints({ x, y, w: pr.width, h, bottom: 0.2, hook: 0 })));
+      path.setAttribute('stroke-width', i === 0 ? 1.75 : 1.25);
+      path.style.opacity = String([0.85, 0.32][i]);
     });
     m.start = docTop(section);
     m.end = m.start + section.offsetHeight - pin.offsetHeight;
@@ -96,7 +111,7 @@ export function initContact() {
 
     // эхо-контуры прорисовываются один за другим
     echoes.forEach((path, i) => {
-      const d = ease.inOutCubic(span(q, 0.22 + i * 0.07, 0.6 + i * 0.07));
+      const d = ease.inOutCubic(span(q, 0.2 + i * 0.12, 0.7 + i * 0.12));
       path.style.strokeDashoffset = (1 - d).toFixed(4);
     });
   }
@@ -122,7 +137,7 @@ export function initContact() {
     const breathe = Math.sin(sc.time / 1800);
     for (let i = 0; i < echoes.length; i++) {
       const k = i + 1;
-      echoes[i].style.transform = `translate3d(${(pointer.x * -14 * k + breathe * k * 1.2).toFixed(2)}px,${(pointer.y * -10 * k).toFixed(2)}px,0)`;
+      echoes[i].style.transform = `translate3d(${(pointer.x * -10 * k + breathe * k).toFixed(2)}px,${(pointer.y * -7 * k).toFixed(2)}px,0)`;
     }
   });
 }
